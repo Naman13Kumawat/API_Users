@@ -1,39 +1,26 @@
 import React from "react";
-// import { createStore } from "redux";
-
 import useFetch from "./hooks/useFetch.js";
 
 import Button from "./components/Button/Button.jsx";
+import { createStore } from "redux";
 
 export default function App() {
-  const [url, setUrl] = React.useState("https://reqres.in/api/users?page=2");
+  const url = "https://reqres.in/api/users?page=2";
   const { data } = useFetch(url);
-  
-  // const initialState = {
-  //   userData: []
-  // };
 
-  // const reducer = (state = initialState, action) => {
-  //   switch (action.type) {
-  //     case "GET USER":
-  //       return getData() ;
-  //     default:
-  //       return state;
-  //   }
-  // };
+  function reducer(state = {}, action) {
+    switch (action.type) {
+      case "FETCH":
+        return data;
+      default:
+        return state;
+    }
+  }
 
-  // const store = createStore(reducer);
-  // const unsubscribe = store.subscribe(() => {
-  //     console.log("Updated State: ", store.getState());
-  //   });
-  //   store.dispatch({type: "GET USER"});
-  // unsubscribe();
+  const store = createStore(reducer);
+  const unsubscribe = store.subscribe(() => {});
+  store.dispatch({ type: "FETCH" });
+  unsubscribe();
 
-  // console.log(store.getState());
-
-  return (
-    <>
-      <Button users={data} />
-    </>
-  );
+  return <Button users={store.getState()} />;
 }

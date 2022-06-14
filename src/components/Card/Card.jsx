@@ -6,6 +6,7 @@ export default function Card({ user }) {
       {user ? <div className={`${styles.info}`}>
       <img className={`${styles.profileImg}`} src={user.avatar} alt="profileImage"/>
       <p>Username: {user.first_name} {user.last_name}</p>
+      <p>ID: {user.id}</p>
       <p>Email: {user.email}</p>
       </div> : <div>Click on any button!</div>}
     </div>
